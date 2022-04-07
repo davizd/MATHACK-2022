@@ -16,7 +16,6 @@ size_after = 1;
 amp=zeros(1,12);  % Initialize vector
 
 seizure_log = [];   % Log of all past seizures
-seizure_dates = [];
 
 %% Loop (always run Setup section before runing Loop section)
 while true
@@ -112,8 +111,7 @@ while true
                     flag = 0;  % The flag is reset for following seizures
                     fprintf(ard,'%d',flag); %
                     
-                    seizure_log = [seizure_log; T, latitude(1), latitude(2), latitude(3), longitude(1), longitude(2), longitude(3)];
-                    seizure_dates = [seizure_dates; datetime];
+                    seizure_log = [seizure_log; now, T, latitude(1), latitude(2), latitude(3), longitude(1), longitude(2), longitude(3)];
                 end
             end
             
@@ -131,3 +129,13 @@ while true
     end
     
 end
+
+filename = 'mydata_accel.xlsx';
+xlswrite(filename,[time_accel f_accel]);
+
+filename1 = 'mydata_amp.xlsx';
+xlswrite(filename1,amp(:));
+
+filename2 = 'mydata_log.xlsx';
+xlswrite(filename2,seizure_log);
+
